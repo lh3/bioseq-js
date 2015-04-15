@@ -1,0 +1,47 @@
+<head>
+<script language="JavaScript" src="bioseq.js"></script>
+<style type="text/css">
+<!--
+	#container { position: relative; }
+	#canvas { border: 1px solid #000; }
+	body { font: 12px "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif; }
+	textarea { font: 100% "consolas", "Andale Mono", Monaco, Courier; overflow: auto }
+-->
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function do_align()
+{
+	var target = document.getElementById('target').value.replace(/[\s\n]+/g, '');
+	var query  = document.getElementById('query').value .replace(/[\s\n]+/g, '');
+	var ms   = parseInt(document.getElementById('match').value);
+	var mms  = parseInt(document.getElementById('mismatch').value);
+	var gapo = parseInt(document.getElementById('gapo').value);
+	var gape = parseInt(document.getElementById('gape').value);
+	var is_local = document.getElementById('is_local').checked;
+
+	var rst = bsa_align(is_local, target, query, [ms, mms], [gapo, gape]);
+	var str = 'score: ' + rst[0] + '\n';
+	str += 'start: ' + rst[1] + '\n';
+	str += 'cigar: ' + bsa_cigar2str(rst[2]) + '\n';
+	str += 'alignment:\n\n';
+	var fmt = bsa_cigar2gaps(target, query, rst[1], rst[2]);
+	str += fmt[0] + '\n';
+	str += fmt[1] + '\n';
+	document.getElementById('out').value = str;
+}
+</script>
+<textarea id="target" rows="10" cols="100">ATAGCTAGCTAGCATAAGC</textarea>
+<br>
+<textarea id="query" rows="10" cols="100">AGCTAcCGCAT</textarea>
+<p>
+<input type="button" value="Align" onClick="do_align();"/>
+local alignment: <input type="checkbox" id="is_local" checked/>
+match score: <input size="4" value="1" id="match"/>
+mismatch: <input size="4" value="-1" id="mismatch"/>
+gap open: <input size="4" value="-1" id="gapo"/>
+extension: <input size="4" value="-1" id="gape"/>
+</p>
+<textarea id="out" rows="7" readOnly style="border: 0" cols="100"></textarea>
+</body>
