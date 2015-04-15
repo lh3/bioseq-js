@@ -48,12 +48,16 @@ function do_align()
 Example: <input type="button" value="D-loop"
 onClick="document.getElementById('target').value = document.getElementById('pa-MT').value;
          document.getElementById('query').value  = document.getElementById('hs-dloop').value;">
-(query: human D-loop, 1122bp; target: orangutan whole chrM, 16499bp)
+(target: orangutan whole chrM, 16499bp; query: human D-loop, 1122bp)
 </p>
+<p>
+Target sequence:<br>
 <textarea id="target" rows="10" cols="110">ATAGCTAGCTAGCATAAGC</textarea>
-</textarea>
-<br>
+</p>
+<p>
+Query sequence:<br>
 <textarea id="query" rows="10" cols="110">AGCTAcCGCAT</textarea>
+</p>
 <p>
 <input type="button" value="Align" onClick="do_align();"/>
 local alignment: <input type="checkbox" id="is_local" checked/>
