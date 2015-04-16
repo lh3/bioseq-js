@@ -1,9 +1,9 @@
 In an online conversation, Istvan Albert was complaining he could not find a
 good Smith-Waterman implementation in Javascript. I thought I could write one
 over night by porting ksw.c to javascript. It took longer than I planned
-because I found new bugs in ksw.c. And while I was porting the C code to
-javascript, I realized that it is not that difficult to merge local and banded
-global alignments in one function. Achieving that also took extra time.
+because I found a couple of subtle bugs in ksw.c. And while I was porting the C
+code to javascript, I realized that it is not that difficult to merge local and
+banded global alignments in one function. Achieving that also took extra time.
 
 The end product is a fast and lightweight javascript library for affine-gap
 local and banded global pairwise alignment. With a modern Javascript engine, it
