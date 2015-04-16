@@ -172,7 +172,7 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 	var qlen = qp[0].length;
 	var max_len = qlen > t.length? qlen : t.length;
 	w = w == null || w < 0? max_len : w;
-	
+
 	// set gap score
 	var gapo, gape; // these are penalties which should be non-negative
 	if (typeof gapsc == 'number') gapo = 0, gape = gapsc > 0? gapsc : -gapsc;
@@ -180,14 +180,13 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 	var gapoe = gapo + gape; // penalty for opening the first gap
 
 	// initial values
-	var NEG_INF = -0x40000000;
 	var H = [], E = [], z = [], score, max = 0, end_i = -1, end_j = -1;
 	if (is_local) {
 		for (var j = 0; j <= qlen; ++j) H[j] = E[j] = 0;
 	} else {
 		H[0] = 0; E[0] = -gapoe - gapoe;
 		for (var j = 1; j <= qlen && j < w; ++j) {
-			if (j >= w) H[j] = E[j] = NEG_INF; // everything is -inf outside the band
+			if (j >= w) H[j] = E[j] = Number.NEGATIVE_INFINITY; // everything is -inf outside the band
 			else H[j] = -(gapo + gape * j), E[j] = E[j-1] - gape;
 		}
 	}
@@ -200,8 +199,8 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 		var beg = i > w? i - w : 0;
 		var end = i + w + 1 < qlen? i + w + 1 : qlen; // only loop through [beg,end) of the query sequence
 		if (!is_local) {
-			h1 = beg > 0? NEG_INF : -gapoe - gape * i;
-			f = beg > 0? NEG_INF : -gapoe - gapoe - gape * i;
+			h1 = beg > 0? Number.NEGATIVE_INFINITY : -gapoe - gape * i;
+			f = beg > 0? Number.NEGATIVE_INFINITY : -gapoe - gapoe - gape * i;
 		}
 		for (var j = beg; j < end; ++j) {
 			// At the beginning of the loop: h=H[j]=H(i-1,j-1), e=E[j]=E(i,j), f=F(i,j) and h1=H(i,j-1)
@@ -228,7 +227,7 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 			f = f > h? f : h;    // f = F(i,j+1)
 			zi[j] = d;           // z[i,j] keeps h for the current cell and e/f for the next cell
 		}
-		H[qlen] = h1, E[qlen] = is_local? 0 : NEG_INF;
+		H[qlen] = h1, E[qlen] = is_local? 0 : Number.NEGATIVE_INFINITY;
 		if (m > max) max = m, end_i = i, end_j = mj;
 	}
 	if (is_local && max == 0) return null;
