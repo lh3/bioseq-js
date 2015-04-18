@@ -170,8 +170,12 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 	var t = bsg_enc_seq(target, table);
 	var qp = bsa_gen_query_profile(query, matrix, table);
 	var qlen = qp[0].length;
+
+	// adjust band width
 	var max_len = qlen > t.length? qlen : t.length;
 	w = w == null || w < 0? max_len : w;
+	var len_diff = t.target > qlen? t.target - qlen : qlen - t.target;
+	w = w > len_diff? w : len_diff;
 	
 	// set gap score
 	var gapo, gape; // these are penalties which should be non-negative
@@ -228,7 +232,7 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 			f = f > h? f : h;    // f = F(i,j+1)
 			zi[j] = d;           // z[i,j] keeps h for the current cell and e/f for the next cell
 		}
-		H[qlen] = h1, E[qlen] = is_local? 0 : NEG_INF;
+		H[end] = h1, E[end] = is_local? 0 : NEG_INF;
 		if (m > max) max = m, end_i = i, end_j = mj;
 	}
 	if (is_local && max == 0) return null;
