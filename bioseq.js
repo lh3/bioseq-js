@@ -189,10 +189,10 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 	if (is_local) {
 		for (var j = 0; j <= qlen; ++j) H[j] = E[j] = 0;
 	} else {
-		H[0] = 0; E[0] = -gapoe - gapoe;
+		H[0] = 0; E[0] = -gapoe - gapo;
 		for (var j = 1; j <= qlen; ++j) {
 			if (j >= w) H[j] = E[j] = NEG_INF; // everything is -inf outside the band
-			else H[j] = -(gapo + gape * j), E[j] = E[j-1] - gape;
+			else H[j] = -(gapo + gape * j), E[j] = -(gapoe + gapo + gape * j);
 		}
 	}
 
@@ -204,8 +204,8 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 		var beg = i > w? i - w : 0;
 		var end = i + w + 1 < qlen? i + w + 1 : qlen; // only loop through [beg,end) of the query sequence
 		if (!is_local) {
-			h1 = beg > 0? NEG_INF : -gapoe - gape * i;
-			f = beg > 0? NEG_INF : -gapoe - gapoe - gape * i;
+			h1 = beg > 0? NEG_INF : -(gapo + gape * i);
+			f = beg > 0? NEG_INF : -(gapoe + gapo + gape * i);
 		}
 		for (var j = beg; j < end; ++j) {
 			// At the beginning of the loop: h=H[j]=H(i-1,j-1), e=E[j]=E(i,j), f=F(i,j) and h1=H(i,j-1)
