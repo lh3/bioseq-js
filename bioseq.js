@@ -213,10 +213,10 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 			var e = E[j], h = H[j], d;
 			H[j] = h1;           // set H(i,j-1) for the next row
 			h += qpi[j];         // h = H(i-1,j-1) + S(i,j)
-			d = h > e? 0 : 1;
-			h = h > e? h : e;
-			d = h > f? d : 2;
-			h = h > f? h : f;    // h = H(i,j) = max{H(i-1,j-1)+S(i,j), E(i,j), F(i,j)}
+			d = h >= e? 0 : 1;
+			h = h >= e? h : e;
+			d = h >= f? d : 2;
+			h = h >= f? h : f;    // h = H(i,j) = max{H(i-1,j-1)+S(i,j), E(i,j), F(i,j)}
 			d = !is_local || h > 0? d : 1<<6;
 			h1 = h;              // save H(i,j) to h1 for the next column
 			mj = m > h? mj : j;
