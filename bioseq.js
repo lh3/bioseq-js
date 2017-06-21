@@ -192,7 +192,7 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 		H[0] = 0; E[0] = -gapoe - gapoe;
 		for (var j = 1; j <= qlen; ++j) {
 			if (j >= w) H[j] = E[j] = NEG_INF; // everything is -inf outside the band
-			else H[j] = -(gapoe + gape * j), E[j] = -(gapoe + gapoe + gape * j);
+			else H[j] = -(gapoe + gape * (j - 1)), E[j] = -(gapoe + gapoe + gape * j);
 		}
 	}
 
