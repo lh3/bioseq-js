@@ -45,6 +45,20 @@ function bsg_enc_seq(seq, table)
 	return s;
 }
 
+var ks_comp = {'A':'T','C':'G','G':'C','T':'A','M':'K','K':'M','Y':'R','R':'Y','V':'B','B':'V','H':'D','D':'H',
+			   'a':'t','c':'g','g':'c','t':'a','m':'k','k':'m','y':'r','r':'y','v':'b','b':'v','h':'d','d':'h'};
+
+function ks_revcomp(s)
+{
+	var i, t = '';
+	for (i = 0; i < s.length; ++i) {
+		var c = s.charAt(s.length - 1 - i);
+		var d = ks_comp[c];
+		t += d? d : c;
+	}
+	return t;
+}
+
 /**************************
  *** Pairwise alignment ***
  **************************/

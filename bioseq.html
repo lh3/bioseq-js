@@ -56,7 +56,8 @@ Target sequence:<br>
 <textarea id="target" rows="10" cols="110">ATAGCTAGCTAGCATAAGC</textarea>
 </p>
 <p>
-Query sequence:<br>
+Query sequence: <input type="button" value="Reverse"
+onClick="document.getElementById('query').value = ks_revcomp(document.getElementById('query').value);"><br>
 <textarea id="query" rows="10" cols="110">AGCTAcCGCAT</textarea>
 </p>
 <p>
