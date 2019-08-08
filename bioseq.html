@@ -33,8 +33,9 @@ function do_align()
 	var linelen = 100, n_lines = 10;
 	for (var l = 0; l < fmt[0].length; l += linelen) {
 		str += fmt[0].substr(l, linelen) + '\n';
+		str += fmt[2].substr(l, linelen) + '\n';
 		str += fmt[1].substr(l, linelen) + '\n\n';
-		n_lines += 3;
+		n_lines += 4;
 	}
 
 	document.getElementById('out').value = str;
@@ -62,8 +63,8 @@ Query sequence:<br>
 <input type="button" value="Align" onClick="do_align();"/>
 local alignment: <input type="checkbox" id="is_local" checked/>
 match score: <input size="3" value="1" id="match"/>
-mismatch: <input size="3" value="-1" id="mismatch"/>
-gap open: <input size="3" value="-1" id="gapo"/>
+mismatch: <input size="3" value="-2" id="mismatch"/>
+gap open: <input size="3" value="-2" id="gapo"/>
 extension: <input size="3" value="-1" id="gape"/>
 <span id="runtime" style="color: gray;"></span>
 </p>

@@ -273,7 +273,7 @@ function bsa_align(is_local, target, query, matrix, gapsc, w, table)
 
 function bsa_cigar2gaps(target, query, start, cigar)
 {
-	var oq = '', ot = '', lq = 0, lt = start;
+	var oq = '', ot = '', mid = '', lq = 0, lt = start;
 	for (var k = 0; k < cigar.length; ++k) {
 		var op = cigar[k]&0xf, len = cigar[k]>>4;
 		if (op == 0) { // match
@@ -292,7 +292,11 @@ function bsa_cigar2gaps(target, query, start, cigar)
 			lq += len;
 		}
 	}
-	return [ot, oq];
+	var ut = ot.toUpperCase();
+	var uq = oq.toUpperCase();
+	for (var k = 0; k < ut.length; ++k)
+		mid += ut.charAt(k) == uq.charAt(k)? '|' : ' ';
+	return [ot, oq, mid];
 }
 
 function bsa_cigar2str(cigar)
